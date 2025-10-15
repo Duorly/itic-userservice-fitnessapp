@@ -16,8 +16,6 @@ spring:
 
   data:
     mongodb:
-      host: localhost
-      port: 27017
       database: "fitness_app"
       uri: "mongodb+srv://nebelmass_db_user:PXoReyH1lS4slTDt@cluster0.mdbg9lj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
       auto-index-creation: true
