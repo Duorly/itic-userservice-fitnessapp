@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -82,8 +83,31 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @GetMapping("/test")
-    public String test() {
-        throw new ApiException(ErrorCode.USER_NOT_FOUND, "");
+    // PUT /api/users/{id}
+    @Operation(summary = "Met à jour un utilisateur existant")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Utilisateur mis à jour avec succès",
+                    content = @Content(schema = @Schema(implementation = UserResponseDto.class))),
+            @ApiResponse(responseCode = "404", description = "Utilisateur non trouvé"),
+            @ApiResponse(responseCode = "400", description = "Requête invalide")
+    })
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponseDto> updateUser(
+            @PathVariable Long id,
+            @RequestBody UserRequestDto dto) {
+        UserResponseDto updated = userService.updateUser(id, dto);
+        return ResponseEntity.ok(updated);
+    }
+
+    // DELETE /api/users/{id}
+    @Operation(summary = "Supprime un utilisateur existant")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Utilisateur supprimé avec succès"),
+            @ApiResponse(responseCode = "404", description = "Utilisateur non trouvé")
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }

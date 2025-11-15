@@ -1,6 +1,8 @@
 package com.itic.userservice.dtos.user;
 
 import com.itic.userservice.enums.Gender;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -42,5 +44,6 @@ public class UserRequestDto {
 
     @Schema(example = "MALE")
     @NotNull(message = "Le genre est obligatoire")
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 }
