@@ -8,12 +8,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Table(name = "users")
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,31 +26,26 @@ public class User {
     @Column(nullable=false, unique=true)
     private String email;
 
+    @Column(name = "first_name")
     private String firstName;
 
+    @Column(name = "last_name")
     private  String lastName;
 
+    @Column(name = "dob")
     private LocalDate dateOfBirth;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private UserStat userStat;
-
-    public void setUserStat(UserStat userStat) {
-        if (this.userStat != null) {
-            this.userStat.setUser(null);
-        }
-        this.userStat = userStat;
-        if (userStat != null && userStat.getUser() != this) {
-            userStat.setUser(this);
-        }
-    }
 
     @PrePersist
     public void onCreate() {

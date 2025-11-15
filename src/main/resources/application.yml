@@ -1,34 +1,41 @@
 spring:
+
+## General Configuration
   application:
     name: user-service
+  config:
+    import: optional:file:.env[.properties]
   mvc:
     servlet:
       path: "/api"
 
+## Database Configuration
   datasource:
-    url: "jdbc:mysql://localhost:3306/user_db?createDatabaseIfNotExist=true"
+    url: "jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?createDatabaseIfNotExist=true"
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: "Mbongui@1992"
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
+## JPA / Hibernate Configuration
   jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
+    show-sql: true
 
-
+## MongoDB Configuration
   data:
     mongodb:
       database: "fitness_app"
       uri: "mongodb+srv://nebelmass_db_user:PXoReyH1lS4slTDt@cluster0.mdbg9lj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
       auto-index-creation: true
 
+## Server Configuration
 server:
-  port: 8081
+  port: ${SERVER_PORT:8081}
 
 springdoc:
   api-docs:
-    path: /v3/api-docs
+    path: /api/v3/api-docs
   swagger-ui:
-    path: /swagger-ui.html
+    path: /api/swagger-ui.html
   packages-to-scan: com.itic.userservice.controllers

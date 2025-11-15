@@ -2,17 +2,47 @@ package com.itic.userservice.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "user_stats")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserStat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
-    @MapsId // This makes UserStat use the same PK as User
-    @JoinColumn(name = "id") // FK column that's also the PK
+    @MapsId
+    @JoinColumn(name = "id")
     private User user;
+
+    @Column(name = "total_points")
+    private Long totalPoints;
+
+    @Column(name = "level")
+    private Integer level;
+
+    @Column(name = "next_level_points")
+    private Long nextLevelPoints;
+
+    @Column(name = "total_challenges_completed")
+    private Integer totalChallengesCompleted;
+
+    @Column(name = "total_distance")
+    private Long totalDistance;
+
+    @Column(name = "total_calories")
+    private Long totalCalories;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @PreUpdate
+    public void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }
