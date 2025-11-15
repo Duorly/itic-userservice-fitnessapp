@@ -3,6 +3,8 @@ package com.itic.userservice.services;
 import com.itic.userservice.dtos.user.UserRequestDto;
 import com.itic.userservice.dtos.user.UserResponseDto;
 import com.itic.userservice.entities.User;
+import com.itic.userservice.exceptions.ApiException;
+import com.itic.userservice.exceptions.ErrorCode;
 import com.itic.userservice.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,7 +43,10 @@ public class UserService {
     public UserResponseDto getUserById(Long id) {
         return userRepository.findById(id)
                 .map(this::mapToResponse)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ApiException(
+                        ErrorCode.USER_NOT_FOUND,
+                        String.format("User with id %d not found", id)
+                ));
     }
 
     private UserResponseDto mapToResponse(User user) {
