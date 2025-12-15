@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
                 ex.getErrorCode().getStatus().value(),
                 ex.getErrorCode().getStatus().getReasonPhrase(),
                 ex.getErrorCode().getMessage(),
-                ex.getDescription(),  // description dynamique
+                ex.getDescription(),  
                 request.getRequestURI()
         );
         return ResponseEntity.status(ex.getErrorCode().getStatus()).body(error);
@@ -32,7 +32,6 @@ public class GlobalExceptionHandler {
         String description = "Violation d'une contrainte en base de données";
         String message = "Données invalides ou déjà existantes";
 
-        // Si tu veux, tu peux extraire le champ spécifique depuis le message SQL
         if (ex.getCause() instanceof ConstraintViolationException cve) {
             String constraint = cve.getConstraintName();
             message = "Conflit : la contrainte " + constraint + " a été violée";
@@ -41,13 +40,13 @@ public class GlobalExceptionHandler {
 
         ErrorResponseDto error = new ErrorResponseDto(
                 LocalDateTime.now(),
-                400, // Bad Request ou 409 Conflict selon le cas
+                400, 
                 "Constraint Violation",
                 message,
                 description,
                 request.getRequestURI()
         );
-        return ResponseEntity.status(409).body(error); // 409 Conflict est plus approprié ici
+        return ResponseEntity.status(409).body(error); 
     }
 
     @ExceptionHandler(Exception.class)
