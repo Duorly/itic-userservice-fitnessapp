@@ -2,8 +2,6 @@ package com.itic.userservice.controllers;
 
 import com.itic.userservice.dtos.user.UserRequestDto;
 import com.itic.userservice.dtos.user.UserResponseDto;
-import com.itic.userservice.exceptions.ApiException;
-import com.itic.userservice.exceptions.ErrorCode;
 import com.itic.userservice.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -64,7 +62,7 @@ public class UserController {
     }
 
     // ----------------------------------------------------
-    // GET /users/{id}
+    // GET /api/users/{id}
     // ----------------------------------------------------
     @Operation(
             summary = "Récupérer un utilisateur par son ID",

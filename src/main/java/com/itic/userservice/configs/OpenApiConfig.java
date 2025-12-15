@@ -27,7 +27,7 @@ public class OpenApiConfig {
                         .contact(new Contact().name("GROUP 1 M2 - Itic Paris").email("support@example.com")))
                 .servers(List.of(
                         new Server().url("http://localhost:8081/api").description("Local"),
-                        new Server().url("https://api.example.com/user-service").description("Prod")
+                        new Server().url("http://192.168.1.138:8081/api").description("Reseau local")
                 ));
     }
 
@@ -36,7 +36,7 @@ public class OpenApiConfig {
     public GroupedOpenApi usersApi() {
         return GroupedOpenApi.builder()
                 .group("Users")
-                .pathsToMatch("/users/**")
+                .pathsToMatch("/users/*", "/users")
                 .build();
     }
 
